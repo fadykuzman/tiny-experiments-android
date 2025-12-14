@@ -12,6 +12,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -22,7 +23,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun LoginScreen(
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel = viewModel(),
+    onSignInSuccess: () -> Unit = {}
 ) {
+    LaunchedEffect(viewModel.isSignedIn) {
+        if (viewModel.isSignedIn) {
+            onSignInSuccess()
+        }
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
