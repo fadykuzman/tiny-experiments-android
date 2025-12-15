@@ -93,3 +93,4 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 .idea
+app/google-services.json
