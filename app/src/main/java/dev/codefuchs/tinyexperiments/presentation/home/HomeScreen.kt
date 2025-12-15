@@ -15,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.codefuchs.tinyexperiments.presentation.auth.AuthViewModel
 
@@ -22,7 +23,7 @@ import dev.codefuchs.tinyexperiments.presentation.auth.AuthViewModel
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = viewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
     onSignOutSuccess: () -> Unit = {}
 ) {
     LaunchedEffect(authViewModel.isSignedIn) {
