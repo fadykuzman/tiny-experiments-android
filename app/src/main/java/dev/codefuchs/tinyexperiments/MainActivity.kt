@@ -14,10 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import dev.codefuchs.tinyexperiments.presentation.auth.LoginScreen
 import dev.codefuchs.tinyexperiments.presentation.home.HomeScreen
 import dev.codefuchs.tinyexperiments.ui.theme.TinyExperimentsTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

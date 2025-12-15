@@ -6,11 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.codefuchs.tinyexperiments.data.repository.AuthRepository
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class AuthViewModel(
-    private val authRepository: AuthRepository = AuthRepository()
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val authRepository: AuthRepository
 ): ViewModel() {
     var email by mutableStateOf("")
     var password by mutableStateOf("")
