@@ -55,6 +55,16 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        if(viewModel.isLoading) {
+            CircularProgressIndicator()
+        }
+
+        viewModel.errorMessage?.let { error ->
+            Text(text= error, color = Color.Red)
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         Button(
             onClick = { viewModel.signIn() },
             modifier = Modifier.fillMaxWidth(),
@@ -68,13 +78,5 @@ fun LoginScreen(
         ) {
             Text("Sign Up")
         }
-    }
-
-    if(viewModel.isLoading) {
-        CircularProgressIndicator()
-    }
-
-    viewModel.errorMessage?.let { error ->
-        Text(text= error, color = Color.Red)
     }
 }

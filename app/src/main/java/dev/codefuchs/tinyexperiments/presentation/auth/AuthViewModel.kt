@@ -1,5 +1,6 @@
 package dev.codefuchs.tinyexperiments.presentation.auth
 
+import android.util.Patterns
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -17,6 +18,10 @@ class AuthViewModel(
     var errorMessage by mutableStateOf<String?>(null)
     var isSignedIn by mutableStateOf(false)
 
+    init {
+        isSignedIn = authRepository.currentUser != null
+    }
+
     fun updateEmail(newEmail: String) {
         email = newEmail
     }
@@ -27,8 +32,12 @@ class AuthViewModel(
 
     fun signIn() {
         viewModelScope.launch {
-            isLoading = true
             errorMessage = null
+
+            errorMessage = validateCredentials()
+            if (errorMessage != null) return@launch
+
+            isLoading = true
             val result = authRepository.signInWithEmail(email, password)
             result.onSuccess {
                 user -> isSignedIn = true
@@ -41,8 +50,12 @@ class AuthViewModel(
 
     fun signUp() {
         viewModelScope.launch {
-            isLoading = true
             errorMessage = null
+
+            errorMessage = validateCredentials()
+            if (errorMessage != null) return@launch
+
+            isLoading = true
             val result = authRepository.signUpWithEmail(email, password)
             result.onSuccess {
                 user -> isSignedIn = true
@@ -51,5 +64,24 @@ class AuthViewModel(
             }
             isLoading = false
         }
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            errorMessage = null
+            authRepository.signOut()
+            isSignedIn = false
+            isLoading = false
+        }
+    }
+
+    private fun validateCredentials(): String? {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            return "This is not a valid email format"
+        }
+        if (password.length< 6) {
+            return "Password MUST be 6 characters or above"
+        }
+        return null
     }
 }

@@ -41,7 +41,13 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("home") {
-                        HomeScreen()
+                        HomeScreen(
+                            onSignOutSuccess = {
+                                navController.navigate("login") {
+                                    popUpTo("home") {inclusive = true}
+                                }
+                            }
+                        )
                     }
                 }
             }
